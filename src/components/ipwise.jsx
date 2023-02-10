@@ -1,8 +1,12 @@
 import { useState,useEffect } from 'react'
-import { API_URL } from "./constants";
+import { API_URL } from "../constants";
 import axios from 'axios';
 import React, { Component } from "react";
 import {Routes, Route, useNavigate,Link} from 'react-router-dom';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+// import './ipwise.css'
+
 
 export default function IP() {
     const [logs, setLogs] = useState([])
@@ -116,16 +120,22 @@ export default function IP() {
     // con
     // let detailed = data[1]
     return (
-        <div>
+        <div className="fill_bottom">
+        <div className='container-summary'>
             <h1>Have a look at IP wise hits today</h1>
             { ipwise_hits !== undefined?
                 <table id='all_log'>
                     <tr>
-                        <th>IP wise details</th>
+                        <th>IP</th>
+                        <th>Number of Hits</th>
                         <th></th>
                         <th>Block</th>
                     </tr>
-                    {text.map(str=>str?<tr key={str.split(" ")[str.split(" ").length-1]}><td>{str}</td><td>{
+                    {text.map(str=>str?<tr key={str.split(" ")[str.split(" ").length-1]}><td>{str.split(" ")[str.split(" ").length-1]}</td>
+                    <td>
+                    {str.split(" ")[str.split(" ").length-2]}
+                    </td>
+                    <td>{
                         ipadr === str.split(" ")[str.split(" ").length-1]?  
                         <button style={{cursor:'pointer'}} onClick={()=>hideDetails()}>Hide Details</button>
                         : 
@@ -139,12 +149,41 @@ export default function IP() {
                 </table>:null
             }
         {/* {no_404} */}
-        <div>
-            {no_200 ? <p>{no_200}</p>:null}
-            {no_404 ? <p>{no_404}</p>:null}
-            {no_500 ? <p>{no_500}</p>:null}
-        </div>
+        
         <Link to={'/'}><button>Go Home</button></Link>
+        </div>
+        { no_200 || no_404 || no_500 ? <div id='all_logs_for_status'>
+            <center><h4>Detailed Log Entry</h4>
+            <table>
+                {/* {console.log(no_200.split(" "))} */}
+                <tr>
+                    <th>IP</th>
+                    <th>Number of Hits</th>
+                    <th>Status Code</th>
+                </tr>
+                {no_200 ? <tr>
+                    <td>{no_200.split(" ")[no_200.split(" ").length-2]}</td>
+                    <td align='center'>{no_200.split(" ")[no_200.split(" ").length-3]}</td>
+                    <td>{no_200.split(" ")[no_200.split(" ").length-1]}</td>
+
+                </tr> : null}
+                {no_404 ? <tr>
+                    <td>{no_404.split(" ")[no_404.split(" ").length-2]}</td>
+                    <td align='center'>{no_404.split(" ")[no_404.split(" ").length-3]}</td>
+                    <td>{no_404.split(" ")[no_404.split(" ").length-1]}</td>
+
+                </tr> : null}
+                {no_500 ? <tr>
+                    <td>{no_500.split(" ")[no_500.split(" ").length-2]}</td>
+                    <td align='center'>{no_500.split(" ")[no_500.split(" ").length-3]}</td>
+                    <td>{no_500.split(" ")[no_500.split(" ").length-1]}</td>
+
+                </tr> : null}
+            </table></center>
+            {/* {no_200 ? <p>{no_200}</p>:null}
+            {no_404 ? <p>{no_404}</p>:null}
+            {no_500 ? <p>{no_500}</p>:null} */}
+        </div>:null}
         </div>
 
     )

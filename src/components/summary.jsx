@@ -1,5 +1,5 @@
 import React, { Component,useState } from "react";
-import {useLocation,Link} from 'react-router-dom'
+import {useLocation,Link, useNavigate} from 'react-router-dom'
 
 
 
@@ -8,7 +8,7 @@ export default function Summary () {
     let res = location.state.data
     // console.log(res.data)
     // console.log(res[200])
-
+    const navigate = new useNavigate();
     const [show200,setShow200] = useState(false)
     const [show404,setShow404] = useState(false)
     const [show500,setShow500] = useState(false)
@@ -39,12 +39,14 @@ export default function Summary () {
         setShow200(!show200)
         setShow404(false)
         setShow500(false)
+        // navigate('/detailed',{state:res[200]})
     }
 
     const req_404 = () => {
         setShow404(!show404)
         setShow200(false)
         setShow500(false)
+
     }
 
     const req_500 = () => {
@@ -53,7 +55,8 @@ export default function Summary () {
         setShow200(false)
     }
     return(
-        <div style={{whiteSpace:"pre-wrap"}}>
+        <div className="fill_bottom">
+        <div style={{whiteSpace:"pre-wrap"}} className='container-summary'>
             <h1>Total number of requests are: </h1>
             <table>
                 <tr>
@@ -92,13 +95,19 @@ export default function Summary () {
                     }
                 </tr>
             </table>
-            <div id='details'>
-                {show200 ? <div style={{whiteSpace:"pre-wrap"}}><h4>Request with status code: 200</h4>{res[200]}</div>:<></>}
-                {show404 ? <div style={{whiteSpace:"pre-wrap"}}><h4>Request with status code: 404</h4>{res[404]}</div>:<></>}       
-                {show500 ? <div style={{whiteSpace:"pre-wrap"}}><h4>Request with status code: 500</h4>{res[500]}</div>:<></>}       
-
-            </div>
+            
             <Link to={'/'}><button>Go Home</button></Link>
         </div>
+        {show200 || show404 || show500 ?  <div id='all_logs_for_status'>
+        {show200 ? <div style={{whiteSpace:"pre-wrap"}}><h4>Requests with status code: 200</h4>{res[200]}</div>:<></>}
+        {show404 ? <div style={{whiteSpace:"pre-wrap"}}><h4>Requests with status code: 404</h4>{res[404]}</div>:<></>}       
+        {show500 ? <div style={{whiteSpace:"pre-wrap"}}><h4>Requests with status code: 500</h4>{res[500]}</div>:<></>} </div>: null}
+        {/* <div id='all_logs_for_today'>
+        {show200 ? <div style={{whiteSpace:"pre-wrap"}}><h4>Requests with status code: 200</h4>{res[200]}</div>:<></>}
+        {show404 ? <div style={{whiteSpace:"pre-wrap"}}><h4>Requests with status code: 404</h4>{res[404]}</div>:<></>}       
+        {show500 ? <div style={{whiteSpace:"pre-wrap"}}><h4>Requests with status code: 500</h4>{res[500]}</div>:<></>}       
+
+    </div> */}
+    </div>
     )
 }

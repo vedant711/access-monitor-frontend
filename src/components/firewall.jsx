@@ -1,5 +1,5 @@
 import { useState,useEffect } from 'react'
-import { API_URL } from "./constants";
+import { API_URL } from "../constants";
 import axios from 'axios';
 import React, { Component } from "react";
 import {Routes, Route, useNavigate,Link} from 'react-router-dom';
@@ -29,8 +29,9 @@ export default function Firewall() {
     }
     
     return(
-        <div>
-            <table>
+        <div className='container'>
+            {/* {console.log(JSON.stringify(text) !==JSON.stringify(['']))} */}
+            {JSON.stringify(text) !==JSON.stringify(['']) && JSON.stringify(text) !==JSON.stringify([]) ? <table>
                 <tr>
                     <th>Blocked IP</th>
                     <th>Unblock</th>
@@ -40,7 +41,7 @@ export default function Firewall() {
                     <td><button onClick={() => unblock(str)}>Unblock</button></td>
                 </tr>:null)}
                 
-            </table>
+            </table>: <h3>No IP in the Blacklist</h3>}
         <Link to={'/'}><button>Go Home</button></Link>
 
         </div>

@@ -1,10 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { Component, Fragment } from "react";
-import Index from './index.jsx'
-import Summary from './summary.jsx'
-import IP from './ipwise.jsx';
-import Firewall from './firewall.jsx';
+import Index from './components/index.jsx'
+import Summary from './components/summary.jsx'
+import IP from './components/ipwise.jsx';
+import Firewall from './components/firewall.jsx';
+import CompleteLogs from './components/all_logs';
+// import Detailed from './components/detailed';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -35,6 +37,10 @@ function App() {
           <Route path="/summary" element={<Summary />}/>
           <Route path="/ipwise" element={<IP />}/>
           <Route path="/firewall" element={<Firewall />}/>
+          <Route path="/all-logs" element={<CompleteLogs />}/>
+          {/* <Route path="/detailed" element={<Detailed />}/> */}
+
+
 
 
             
