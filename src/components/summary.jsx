@@ -39,13 +39,15 @@ export default function Summary () {
         setShow200(!show200)
         setShow404(false)
         setShow500(false)
-        // navigate('/detailed',{state:res[200]})
+        navigate('/detailed',{state:res[200]})
     }
 
     const req_404 = () => {
         setShow404(!show404)
         setShow200(false)
         setShow500(false)
+        navigate('/detailed',{state:res[404]})
+
 
     }
 
@@ -53,6 +55,8 @@ export default function Summary () {
         setShow500(!show500)
         setShow404(false)
         setShow200(false)
+        navigate('/detailed',{state:res[500]})
+
     }
     return(
         <div className="fill_bottom">
@@ -98,10 +102,10 @@ export default function Summary () {
             
             <Link to={'/'}><button>Go Home</button></Link>
         </div>
-        {show200 || show404 || show500 ?  <div id='all_logs_for_status'>
+        {/* {show200 || show404 || show500 ?  <div id='all_logs_for_status_today'>
         {show200 ? <div style={{whiteSpace:"pre-wrap"}}><h4>Requests with status code: 200</h4>{res[200]}</div>:<></>}
         {show404 ? <div style={{whiteSpace:"pre-wrap"}}><h4>Requests with status code: 404</h4>{res[404]}</div>:<></>}       
-        {show500 ? <div style={{whiteSpace:"pre-wrap"}}><h4>Requests with status code: 500</h4>{res[500]}</div>:<></>} </div>: null}
+        {show500 ? <div style={{whiteSpace:"pre-wrap"}}><h4>Requests with status code: 500</h4>{res[500]}</div>:<></>} </div>: null} */}
         {/* <div id='all_logs_for_today'>
         {show200 ? <div style={{whiteSpace:"pre-wrap"}}><h4>Requests with status code: 200</h4>{res[200]}</div>:<></>}
         {show404 ? <div style={{whiteSpace:"pre-wrap"}}><h4>Requests with status code: 404</h4>{res[404]}</div>:<></>}       

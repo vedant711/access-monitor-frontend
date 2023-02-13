@@ -5,6 +5,7 @@ import React, { Component } from "react";
 import {Routes, Route, useNavigate,Link} from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import ReactModal from 'react-modal'
 // import './ipwise.css'
 
 
@@ -116,6 +117,12 @@ export default function IP() {
 
 
     }
+
+    const bg = {
+        Overlay: {
+          background: "#000000"
+        }
+      };
     // let no_404=''
     // con
     // let detailed = data[1]
@@ -135,24 +142,26 @@ export default function IP() {
                     <td>
                     {str.split(" ")[str.split(" ").length-2]}
                     </td>
-                    <td>{
+                    {/* <td>{
                         ipadr === str.split(" ")[str.split(" ").length-1]?  
                         <button style={{cursor:'pointer'}} onClick={()=>hideDetails()}>Hide Details</button>
                         : 
                         <button style={{cursor:'pointer'}} onClick={()=>details(str)}>Show Details</button>
                         }
-                    </td>
-                    <td>{ checkIP(str.split(" ")[str.split(" ").length-1]) ? <button style={{cursor:'pointer'}} onClick={()=>unblockIP(str.split(" ")[str.split(" ").length-1])}>Unblock</button> :
-                        <button style={{cursor:'pointer'}} onClick={()=>blockIP(str.split(" ")[str.split(" ").length-1])}>Block</button>
-                        }</td></tr>:null)}
+                    </td> */}
+                    <td>
                         
-                </table>:null
-            }
-        {/* {no_404} */}
-        
-        <Link to={'/'}><button>Go Home</button></Link>
-        </div>
-        { no_200 || no_404 || no_500 ? <div id='all_logs_for_status'>
+                    <button style={{cursor:'pointer'}} onClick={()=>details(str)}>Show Details</button>
+                    <ReactModal isOpen={ipadr === str.split(" ")[str.split(" ").length-1]} onRequestClose={()=>hideDetails()} className='hello' styles={bg} style={{
+                            overlay: {
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)'
+                            }}}>
+                    { no_200 || no_404 || no_500 ? <div id='all_logs_for_status'>
             <center><h4>Detailed Log Entry</h4>
             <table>
                 {/* {console.log(no_200.split(" "))} */}
@@ -180,10 +189,53 @@ export default function IP() {
 
                 </tr> : null}
             </table></center>
-            {/* {no_200 ? <p>{no_200}</p>:null}
-            {no_404 ? <p>{no_404}</p>:null}
-            {no_500 ? <p>{no_500}</p>:null} */}
-        </div>:null}
+            </div>:null}
+                    </ReactModal>
+                    </td>
+                    {/* <td>
+                        <Popup trigger={<button onClick={()=>details(str)}>Show Details</button>} modal nested>
+                        </Popup>
+                    </td> */}
+                    <td>{ checkIP(str.split(" ")[str.split(" ").length-1]) ? <button style={{cursor:'pointer'}} onClick={()=>unblockIP(str.split(" ")[str.split(" ").length-1])}>Unblock</button> :
+                        <button style={{cursor:'pointer'}} onClick={()=>blockIP(str.split(" ")[str.split(" ").length-1])}>Block</button>
+                        }</td></tr>:null)}
+                        
+                </table>:null
+            }
+        {/* {no_404} */}
+        
+        <Link to={'/'}><button>Go Home</button></Link>
+        </div>
+        {/* { no_200 || no_404 || no_500 ? <div id='all_logs_for_status'>
+            <center><h4>Detailed Log Entry</h4>
+            <table>
+                
+                <tr>
+                    <th>IP</th>
+                    <th>Number of Hits</th>
+                    <th>Status Code</th>
+                </tr>
+                {no_200 ? <tr>
+                    <td>{no_200.split(" ")[no_200.split(" ").length-2]}</td>
+                    <td align='center'>{no_200.split(" ")[no_200.split(" ").length-3]}</td>
+                    <td>{no_200.split(" ")[no_200.split(" ").length-1]}</td>
+
+                </tr> : null}
+                {no_404 ? <tr>
+                    <td>{no_404.split(" ")[no_404.split(" ").length-2]}</td>
+                    <td align='center'>{no_404.split(" ")[no_404.split(" ").length-3]}</td>
+                    <td>{no_404.split(" ")[no_404.split(" ").length-1]}</td>
+
+                </tr> : null}
+                {no_500 ? <tr>
+                    <td>{no_500.split(" ")[no_500.split(" ").length-2]}</td>
+                    <td align='center'>{no_500.split(" ")[no_500.split(" ").length-3]}</td>
+                    <td>{no_500.split(" ")[no_500.split(" ").length-1]}</td>
+
+                </tr> : null}
+            </table></center>
+            
+        </div>:null} */}
         </div>
 
     )
