@@ -5,9 +5,12 @@ import {useLocation,Link, useNavigate} from 'react-router-dom'
 
 export default function Summary () {
     let location = useLocation();
-    let res = location.state.data
+    let res = location.state.response.data
+    // console.log(res)
     // console.log(res.data)
-    // console.log(res[200])
+    // let res = {}
+    // console.log(location.state)
+    let server = location.state.server
     const navigate = new useNavigate();
     const [show200,setShow200] = useState(false)
     const [show404,setShow404] = useState(false)
@@ -39,14 +42,14 @@ export default function Summary () {
         setShow200(!show200)
         setShow404(false)
         setShow500(false)
-        navigate('/detailed',{state:res[200]})
+        navigate('/'+server+'/detailed',{state:{response:res[200],server:server}})
     }
 
     const req_404 = () => {
         setShow404(!show404)
         setShow200(false)
         setShow500(false)
-        navigate('/detailed',{state:res[404]})
+        navigate('/'+server+'/detailed',{state:{response:res[404],server:server}})
 
 
     }
@@ -55,7 +58,7 @@ export default function Summary () {
         setShow500(!show500)
         setShow404(false)
         setShow200(false)
-        navigate('/detailed',{state:res[500]})
+        navigate('/'+server+'/detailed',{state:{response:res[500],server:server}})
 
     }
     return(
@@ -100,7 +103,7 @@ export default function Summary () {
                 </tr>
             </table>
             
-            <Link to={'/'}><button>Go Home</button></Link>
+            <button onClick={() => navigate(-1)}>Go Home</button>
         </div>
         {/* {show200 || show404 || show500 ?  <div id='all_logs_for_status_today'>
         {show200 ? <div style={{whiteSpace:"pre-wrap"}}><h4>Requests with status code: 200</h4>{res[200]}</div>:<></>}

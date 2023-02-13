@@ -7,6 +7,8 @@ import IP from './components/ipwise.jsx';
 import Firewall from './components/firewall.jsx';
 import CompleteLogs from './components/all_logs';
 import Detailed from './components/detailed';
+import Home from './components/homepage';
+// import Nginx from './components/nginx';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -30,15 +32,24 @@ function App() {
     // </div>
     <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />}/>
+        <Route path="/" element={<Home />}/>
+          
+          <Route path="/apache2" element={<Index />}/>
             
           {/* </Route> */}
 
-          <Route path="/summary" element={<Summary />}/>
-          <Route path="/ipwise" element={<IP />}/>
-          <Route path="/firewall" element={<Firewall />}/>
-          <Route path="/all-logs" element={<CompleteLogs />}/>
-          <Route path="/detailed" element={<Detailed />}/>
+          <Route path="/apache2/summary" element={<Summary />}/>
+          <Route path="/apache2/ipwise" element={<IP />}/>
+          <Route path="/apache2/firewall" element={<Firewall />}/>
+          <Route path="/apache2/all-logs" element={<CompleteLogs />}/>
+          <Route path="/apache2/detailed" element={<Detailed />}/>
+
+          <Route path="/nginx" element={<Index />}/>
+          <Route path="/nginx/summary" element={<Summary />}/>
+          <Route path="/nginx/ipwise" element={<IP />}/>
+          <Route path="/nginx/firewall" element={<Firewall />}/>
+          <Route path="/nginx/all-logs" element={<CompleteLogs />}/>
+          <Route path="/nginx/detailed" element={<Detailed />}/>
 
 
 

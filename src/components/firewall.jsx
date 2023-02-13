@@ -2,12 +2,15 @@ import { useState,useEffect } from 'react'
 import { API_URL } from "../constants";
 import axios from 'axios';
 import React, { Component } from "react";
-import {Routes, Route, useNavigate,Link} from 'react-router-dom';
+import {Routes, Route, useNavigate,Link, useLocation} from 'react-router-dom';
 
 export default function Firewall() {
     const [ips, setIps] = useState([])
+    const location = new useLocation();
+    const navigate = new useNavigate();
+    const server = location.state.server
     useEffect(()=>{
-        axios.get(API_URL+'firewall').then((response)=> {
+        axios.get(API_URL+server+'/firewall/').then((response)=> {
             setIps(response.data);
         })
     },[]);
@@ -22,7 +25,7 @@ export default function Firewall() {
     }
 
     let unblock = (ip) => {
-        axios.post(API_URL+'unblockip',{'ip':ip}).then((res) => {
+        axios.post(API_URL+server+'/unblockip/',{'ip':ip}).then((res) => {
             console.log(res)
         })
         window.location.reload(false)
@@ -42,7 +45,7 @@ export default function Firewall() {
                 </tr>:null)}
                 
             </table>: <h3>No IP in the Blacklist</h3>}
-        <Link to={'/'}><button>Go Home</button></Link>
+        <button onClick={()=>navigate(-1)}>Go Home</button>
 
         </div>
     )

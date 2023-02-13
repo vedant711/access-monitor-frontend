@@ -2,12 +2,15 @@ import { useState,useEffect } from 'react'
 import { API_URL } from "../constants";
 import axios from 'axios';
 import React, { Component } from "react";
-import {Routes, Route, useNavigate,Link} from 'react-router-dom'
+import {Routes, Route, useNavigate,Link,useLocation} from 'react-router-dom'
 import './style.css'
 
 export default function Index() {
     const [toggle,setToggle] = useState(false)
     const [logs, setLogs] = useState([])
+    const location = new useLocation();
+    let server = location.state.server
+    console.log(location.state)
     // const [data, setData] = useState({})
     const change  = () => {
         setToggle(!toggle)
@@ -16,7 +19,7 @@ export default function Index() {
     const navigate = useNavigate();
     const summary = (res) => {
         console.log(res)
-        navigate('/summary',{state:{response:res}});
+        navigate('/'+ server +'/summary',{state:{response:res,server:server}});
     }
 
     const [filter, setFilter] = useState('')
@@ -45,7 +48,7 @@ export default function Index() {
     // }, []);
 
     useEffect(()=>{
-        axios.get(API_URL).then((response)=> {
+        axios.get(API_URL+server+ '/').then((response)=> {
             setLogs(response.data);
             // console.log(response.status)
         })
@@ -53,14 +56,14 @@ export default function Index() {
 
     let filterApply = () => {
         console.log(filter)
-        axios.post(API_URL+'show_custom',{'filter':filter}).then((res) => {
+        axios.post(API_URL+server+'/show_custom/',{'filter':filter}).then((res) => {
             console.log(res)
             // summary(res)
             // let result = res.data
             // console.log(typeof(result))
             // let hello = {name:'vedant'}
             // console.log(typeof(hello))
-            navigate('/summary',{state:res.data});
+            navigate('/'+ server +'/summary',{state:{response:res.data,server:server}});
         })
 
     }
@@ -68,13 +71,16 @@ export default function Index() {
     return(
         <div style={{width:"100%"}} className="main-content">
             <div className="header">
-            <Link to='/ipwise'>View IP wise hits</Link>
-            <Link to='/firewall'>See all blocked IPs</Link>
-            <Link to='/all-logs'>View Complete Log</Link>
+            {/* <Link to={'/'+ server +'/ipwise'}>View IP wise hits</Link>
+            <Link to={'/'+ server +'/firewall'}>See all blocked IPs</Link>
+            <Link to={'/'+ server +'/all-logs'}>View Complete Log</Link> */}
+            <p onClick={()=>navigate('/'+ server +'/ipwise',{state:{server:server}})}>View IP wise hits</p>
+            <p onClick={()=>navigate('/'+ server +'/firewall',{state:{server:server}})}>See all blocked IPs</p>
+            <p onClick={()=>navigate('/'+ server +'/all-logs',{state:{server:server}})}>View Complete Log</p>
 
             </div>
         <div className='container'>
-            <h1>Welcome to the Access Monitor</h1>
+            <h1>Welcome to the Access Monitor for {server} Server</h1>
             <h2>Have a look at today's log</h2>
             {/* {
                 toggle?
@@ -102,7 +108,7 @@ export default function Index() {
             {/* Select topping <strong>{filter}</strong> */}
             {/* <Link to='/ipwise'><button >View IP wise hits</button></Link>
             <Link to='/firewall'><button >See all blocked IPs</button></Link> */}
-
+            <Link to='/'><button >Go back to Server Selection</button></Link>
         </div>
         </div>
 

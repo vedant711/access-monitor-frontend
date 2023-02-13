@@ -2,7 +2,7 @@ import { useState,useEffect } from 'react'
 import { API_URL } from "../constants";
 import axios from 'axios';
 import React, { Component } from "react";
-import {Routes, Route, useNavigate,Link} from 'react-router-dom';
+import {Routes, Route, useNavigate,Link,useLocation} from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import ReactModal from 'react-modal'
@@ -15,10 +15,13 @@ export default function IP() {
     let [no_404,setNo_404] = useState('')
     let [no_500,setNo_500] = useState('')
     let [ipadr,setIP] = useState('')
+    const navigate = new useNavigate();
+    const location = new useLocation();
     const [blocked_ips,setBlockedIPs] = useState({})
+    const server = location.state.server
 
     useEffect(()=>{
-        axios.get(API_URL+'show_ipwise').then((response)=> {
+        axios.get(API_URL+server+'/show_ipwise/').then((response)=> {
             setLogs(response.data);
             // console.log(logs)
             // console.log(response.status)
@@ -26,7 +29,7 @@ export default function IP() {
     },[]);
 
     useEffect(()=>{
-        axios.get(API_URL+'show_blocked').then((response)=> {
+        axios.get(API_URL+server+'/show_blocked/').then((response)=> {
             // console.log(response.status)
             // let block = response.data
             setBlockedIPs(response.data);
@@ -66,7 +69,7 @@ export default function IP() {
     }
 
     let unblockIP=(ip) => {
-        axios.post(API_URL+'unblockip',{'ip':ip}).then((res) => {
+        axios.post(API_URL+server+'/unblockip/',{'ip':ip}).then((res) => {
             console.log(res)
         })
         window.location.reload(false)
@@ -106,7 +109,7 @@ export default function IP() {
     }
 
     let blockIP = (ip) => {
-        axios.post(API_URL+'blockip',{'ip':ip}).then((res) => {
+        axios.post(API_URL+server+'/blockip/',{'ip':ip}).then((res) => {
             console.log(res)
         })
         // axios.get(API_URL+'show_blocked').then((response)=> {
@@ -204,7 +207,7 @@ export default function IP() {
             }
         {/* {no_404} */}
         
-        <Link to={'/'}><button>Go Home</button></Link>
+        <button onClick={()=> navigate(-1)}>Go Home</button>
         </div>
         {/* { no_200 || no_404 || no_500 ? <div id='all_logs_for_status'>
             <center><h4>Detailed Log Entry</h4>

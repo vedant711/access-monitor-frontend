@@ -119,17 +119,18 @@ label {
 
 } */
 
-.header a {
+.header p {
 	text-decoration: none;
 	color:black;
 	float: right;
+	cursor: pointer;
 }
 
 /* .header p:hover {
 	color:#FF4B2B
 } */
 
-.header a:hover {
+.header p:hover {
 	color:#FF4B2B
 }
 

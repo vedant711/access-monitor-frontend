@@ -5,7 +5,8 @@ export default function Detailed() {
     let location = new useLocation();
     // let history = new useHistory();
     const navigate = useNavigate();
-    let res = location.state
+    let res = location.state.response
+    let server = location.state.server
     // console.log(res)
 
     // let goBack = () => {
