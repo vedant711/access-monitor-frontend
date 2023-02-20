@@ -14,6 +14,13 @@ export default function IP() {
     let [no_200,setNo_200] = useState('')
     let [no_404,setNo_404] = useState('')
     let [no_500,setNo_500] = useState('')
+    let [no_301,setNo_301] = useState('')
+    let [no_302,setNo_302] = useState('')
+    let [no_408,setNo_408] = useState('')
+    let [no_401,setNo_401] = useState('')
+
+
+
     let [ipadr,setIP] = useState('')
     const navigate = new useNavigate();
     const location = new useLocation();
@@ -79,6 +86,13 @@ export default function IP() {
         setNo_200('')
         setNo_404('')
         setNo_500('')
+        setNo_301('')
+        setNo_302('')
+        setNo_408('')
+        setNo_401('')
+
+
+
         let arr = str.split(" ")
         let ip = arr[arr.length-1]
         setIP(ip)
@@ -98,6 +112,22 @@ export default function IP() {
         if (ipwise_hits[1].match(regex)) {
             setNo_500(regex.exec(ipwise_hits[1])[0])
         }
+        regex = new RegExp(".*"+ip+".*301.*\n");
+        if (ipwise_hits[1].match(regex)) {
+            setNo_301(regex.exec(ipwise_hits[1])[0])
+        }
+        regex = new RegExp(".*"+ip+".*302.*\n");
+        if (ipwise_hits[1].match(regex)) {
+            setNo_302(regex.exec(ipwise_hits[1])[0])
+        }
+        regex = new RegExp(".*"+ip+".*408.*\n");
+        if (ipwise_hits[2].match(regex)) {
+            setNo_408(regex.exec(ipwise_hits[2])[0])
+        }
+        regex = new RegExp(".*"+ip+".*401.*\n");
+        if (ipwise_hits[1].match(regex)) {
+            setNo_401(regex.exec(ipwise_hits[1])[0])
+        }
         // console.log(no_200+no_404+no_500)
             }
     
@@ -105,6 +135,13 @@ export default function IP() {
         setNo_200('')
         setNo_404('')
         setNo_500('')
+        setNo_301('')
+        setNo_302('')
+        setNo_408('')
+        setNo_401('')
+
+        
+
         setIP('')
     }
 
@@ -164,7 +201,7 @@ export default function IP() {
                             bottom: 0,
                             backgroundColor: 'rgba(0, 0, 0, 0.8)'
                             }}}>
-                    { no_200 || no_404 || no_500 ? <div id='all_logs_for_status'>
+                    { no_200 || no_404 || no_500 || no_301 || no_302 || no_408 || no_401? <div id='all_logs_for_status'>
             <center><h4>Detailed Log Entry</h4>
             <table>
                 {/* {console.log(no_200.split(" "))} */}
@@ -189,6 +226,31 @@ export default function IP() {
                     <td>{no_500.split(" ")[no_500.split(" ").length-2]}</td>
                     <td align='center'>{no_500.split(" ")[no_500.split(" ").length-3]}</td>
                     <td>{no_500.split(" ")[no_500.split(" ").length-1]}</td>
+
+                </tr> : null}
+                {no_301 ? <tr>
+                    <td>{no_301.split(" ")[no_301.split(" ").length-2]}</td>
+                    <td align='center'>{no_301.split(" ")[no_301.split(" ").length-3]}</td>
+                    <td>{no_301.split(" ")[no_301.split(" ").length-1]}</td>
+
+                </tr> : null}
+                {no_302 ? <tr>
+                    <td>{no_302.split(" ")[no_302.split(" ").length-2]}</td>
+                    <td align='center'>{no_302.split(" ")[no_302.split(" ").length-3]}</td>
+                    <td>{no_302.split(" ")[no_302.split(" ").length-1]}</td>
+
+                </tr> : null}
+
+                {no_408 ? <tr>
+                    <td>{no_408.split(" ")[no_408.split(" ").length-2]}</td>
+                    <td align='center'>{no_408.split(" ")[no_408.split(" ").length-3]}</td>
+                    <td>{no_408.split(" ")[no_408.split(" ").length-1]}</td>
+
+                </tr> : null}
+                {no_401 ? <tr>
+                    <td>{no_401.split(" ")[no_401.split(" ").length-2]}</td>
+                    <td align='center'>{no_401.split(" ")[no_401.split(" ").length-3]}</td>
+                    <td>{no_401.split(" ")[no_401.split(" ").length-1]}</td>
 
                 </tr> : null}
             </table></center>
