@@ -9,6 +9,7 @@ import CompleteLogs from './components/all_logs';
 import Detailed from './components/detailed';
 import Home from './components/homepage';
 // import Nginx from './components/nginx';
+import { useState,useEffect } from 'react'
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -30,6 +31,8 @@ function App() {
     //     </a>
     //   </header>
     // </div>
+
+    
     <BrowserRouter>
         <Routes>
         <Route path="/" element={<Home />}/>

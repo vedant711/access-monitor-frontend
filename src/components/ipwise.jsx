@@ -7,6 +7,8 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import ReactModal from 'react-modal'
 // import './ipwise.css'
+import Loader from './loader.jsx'
+
 
 
 export default function IP() {
@@ -18,6 +20,8 @@ export default function IP() {
     let [no_302,setNo_302] = useState('')
     let [no_408,setNo_408] = useState('')
     let [no_401,setNo_401] = useState('')
+    const [isLoading, setLoading] = useState(true)
+
 
 
 
@@ -31,6 +35,7 @@ export default function IP() {
         axios.get(API_URL+server+'/show_ipwise/').then((response)=> {
             setLogs(response.data);
             // console.log(logs)
+            setLoading(false)
             // console.log(response.status)
         })
     },[]);
@@ -169,8 +174,11 @@ export default function IP() {
     return (
         <div className="fill_bottom">
         <div className='container-summary'>
-            <h1>Have a look at IP wise hits today</h1>
-            { ipwise_hits !== undefined?
+            
+            {isLoading ? <Loader/> :
+             ipwise_hits !== undefined?
+             <>
+             <h1>Have a look at IP wise hits today</h1>
                 <table id='all_log'>
                     <tr>
                         <th>IP</th>
@@ -202,8 +210,8 @@ export default function IP() {
                             backgroundColor: 'rgba(0, 0, 0, 0.8)'
                             }}}>
                     { no_200 || no_404 || no_500 || no_301 || no_302 || no_408 || no_401? <div id='all_logs_for_status'>
-            <center><h4>Detailed Log Entry</h4>
-            <table>
+                <center><h4>Detailed Log Entry</h4>
+                <table>
                 {/* {console.log(no_200.split(" "))} */}
                 <tr>
                     <th>IP</th>
@@ -253,8 +261,8 @@ export default function IP() {
                     <td>{no_401.split(" ")[no_401.split(" ").length-1]}</td>
 
                 </tr> : null}
-            </table></center>
-            </div>:null}
+                </table></center>
+                </div>:null}
                     </ReactModal>
                     </td>
                     {/* <td>
@@ -265,11 +273,12 @@ export default function IP() {
                         <button style={{cursor:'pointer'}} onClick={()=>blockIP(str.split(" ")[str.split(" ").length-1])}>Block</button>
                         }</td></tr>:null)}
                         
-                </table>:null
-            }
-        {/* {no_404} */}
+                </table>
+                <button onClick={()=> navigate(-1)}>Go Home</button>
+                </>
+                :null}
         
-        <button onClick={()=> navigate(-1)}>Go Home</button>
+        
         </div>
         {/* { no_200 || no_404 || no_500 ? <div id='all_logs_for_status'>
             <center><h4>Detailed Log Entry</h4>

@@ -47,24 +47,25 @@ export default function Index() {
     //       });
     // }, []);
 
-    useEffect(()=>{
-        axios.get(API_URL+server+ '/').then((response)=> {
-            setLogs(response.data);
-            // console.log(response.status)
-        })
-    },[]);
+    // useEffect(()=>{
+    //     axios.get(API_URL+server+ '/').then((response)=> {
+    //         setLogs(response.data);
+    //         // console.log(response.status)
+    //     })
+    // },[]);
 
     let filterApply = () => {
         console.log(filter)
-        axios.post(API_URL+server+'/show_custom/',{'filter':filter}).then((res) => {
-            console.log(res)
-            // summary(res)
-            // let result = res.data
-            // console.log(typeof(result))
-            // let hello = {name:'vedant'}
-            // console.log(typeof(hello))
-            navigate('/'+ server +'/summary',{state:{response:res.data,server:server}});
-        })
+        // axios.post(API_URL+server+'/show_custom/',{'filter':filter}).then((res) => {
+        //     console.log(res)
+        //     // summary(res)
+        //     // let result = res.data
+        //     // console.log(typeof(result))
+        //     // let hello = {name:'vedant'}
+        //     // console.log(typeof(hello))
+        //     navigate('/'+ server +'/summary',{state:{response:res.data,server:server}});
+        // })
+        navigate('/'+server+'/summary',{state:{filter:filter,server:server}})
 
     }
 
