@@ -54,18 +54,18 @@ export default function Summary () {
     }
     if (res!=={} && res!==undefined ){
         // console.log(res)
-    no_200 = getLineCount(res[200])
-    if (no_200 !== 0) {no_200-=1}
-    no_404 = getLineCount(res[404])
-    no_500 = getLineCount(res[500])
-    no_301 = getLineCount(res[301])
-    no_302 = getLineCount(res[302])
+    no_200 = res[200]
+    // if (no_200 !== 0) {no_200-=1}
+    no_404 = res[404]
+    no_500 = res[500]
+    no_301 = res[301]
+    no_302 = res[302]
 
 
-    if (no_404 !== 0) {no_404-=1}
-    if (no_500 !== 0) {no_500-=1}
-    if (no_301 !== 0) {no_301-=1}
-    if (no_302 !== 0) {no_302-=1}
+    // if (no_404 !== 0) {no_404-=1}
+    // if (no_500 !== 0) {no_500-=1}
+    // if (no_301 !== 0) {no_301-=1}
+    // if (no_302 !== 0) {no_302-=1}
     }
 
     // console.log(no_200)
@@ -81,7 +81,7 @@ export default function Summary () {
         setShow301(false)
         setShow302(false)
 
-        navigate('/'+server+'/detailed',{state:{response:res[200],server:server}})
+        navigate('/'+server+'/detailed',{state:{filter:filter,server:server,code:'200'}})
     }
 
     const req_404 = () => {
@@ -90,7 +90,7 @@ export default function Summary () {
         setShow500(false)
         setShow301(false)
         setShow302(false)
-        navigate('/'+server+'/detailed',{state:{response:res[404],server:server}})
+        navigate('/'+server+'/detailed',{state:{filter:filter,server:server,code:'404'}})
 
 
     }
@@ -101,7 +101,7 @@ export default function Summary () {
         setShow200(false)
         setShow301(false)
         setShow302(false)
-        navigate('/'+server+'/detailed',{state:{response:res[500],server:server}})
+        navigate('/'+server+'/detailed',{state:{filter:filter,server:server,code:'500'}})
 
     }
 
@@ -111,7 +111,7 @@ export default function Summary () {
         setShow200(false)
         setShow301(!show301)
         setShow302(false)
-        navigate('/'+server+'/detailed',{state:{response:res[301],server:server}})
+        navigate('/'+server+'/detailed',{state:{filter:filter,server:server,code:'301'}})
 
     }
 
@@ -121,7 +121,7 @@ export default function Summary () {
         setShow200(false)
         setShow301(false)
         setShow302(!show302)
-        navigate('/'+server+'/detailed',{state:{response:res[302],server:server}})
+        navigate('/'+server+'/detailed',{state:{filter:filter,server:server,code:'302'}})
 
     }
     return(
