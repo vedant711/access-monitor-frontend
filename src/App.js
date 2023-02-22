@@ -8,10 +8,20 @@ import Firewall from './components/firewall.jsx';
 import CompleteLogs from './components/all_logs';
 import Detailed from './components/detailed';
 import Home from './components/homepage';
+import Login from './components/login';
 // import Nginx from './components/nginx';
-import { useState,useEffect } from 'react'
+import { useState,useEffect,useContext } from 'react'
+import AuthContext from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
+import { BrowserRouter, Route, Routes,Navigate } from 'react-router-dom';
+import PrivateRoute from './privateRoute';
+import Header from './components/header';
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+// const PrivateRoute = ({ children, ...rest }) => {
+//   let { user } = useContext(AuthContext);
+//   return <Route {...rest}>{!user ? <Navigate to="/login" /> : children}</Route>;
+// };
+
 
 function App() {
   return (
@@ -31,28 +41,68 @@ function App() {
     //     </a>
     //   </header>
     // </div>
-
+    
     
     <BrowserRouter>
+    <Header/>
+    <AuthProvider>
         <Routes>
-        <Route path="/" element={<Home />}/>
-          
+          <Route path='/login' element={<Login />}/>
+        {/* <PrivateRoute path="/" element={<Home />}/> */}
+        <Route path='/' element={<PrivateRoute/>}>
+          <Route path='/' element={<Home/>}/>
+        </Route>
+        <Route path='/apache2' element={<PrivateRoute/>}>
           <Route path="/apache2" element={<Index />}/>
-            
-          {/* </Route> */}
-
+        </Route>
+        <Route path='/apache2/summary' element={<PrivateRoute/>}>
           <Route path="/apache2/summary" element={<Summary />}/>
+        </Route>
+        <Route path='/apache2/ipwise' element={<PrivateRoute/>}>
           <Route path="/apache2/ipwise" element={<IP />}/>
+        </Route>
+        <Route path='/apache2/firewall' element={<PrivateRoute/>}>
           <Route path="/apache2/firewall" element={<Firewall />}/>
+        </Route>
+        <Route path='/apache2/all-logs' element={<PrivateRoute/>}>
           <Route path="/apache2/all-logs" element={<CompleteLogs />}/>
+        </Route>
+        <Route path='/apache2/detailed' element={<PrivateRoute/>}>
           <Route path="/apache2/detailed" element={<Detailed />}/>
+        </Route>
 
+        <Route path='/nginx' element={<PrivateRoute/>}>
           <Route path="/nginx" element={<Index />}/>
+        </Route>
+        <Route path='/nginx/summary' element={<PrivateRoute/>}>
           <Route path="/nginx/summary" element={<Summary />}/>
+        </Route>
+        <Route path='/nginx/ipwise' element={<PrivateRoute/>}>
           <Route path="/nginx/ipwise" element={<IP />}/>
+        </Route>
+        <Route path='/nginx/firewall' element={<PrivateRoute/>}>
           <Route path="/nginx/firewall" element={<Firewall />}/>
+        </Route>
+        <Route path='/nginx/all-logs' element={<PrivateRoute/>}>
           <Route path="/nginx/all-logs" element={<CompleteLogs />}/>
+        </Route>
+        <Route path='/nginx/detailed' element={<PrivateRoute/>}>
           <Route path="/nginx/detailed" element={<Detailed />}/>
+        </Route>
+
+
+          {/* <PrivateRoute path="/apache2/summary" element={<Summary />}/>
+          <PrivateRoute path="/apache2/ipwise" element={<IP />}/>
+          <PrivateRoute path="/apache2/firewall" element={<Firewall />}/>
+          <PrivateRoute path="/apache2/all-logs" element={<CompleteLogs />}/>
+          <PrivateRoute path="/apache2/detailed" element={<Detailed />}/>
+
+          <PrivateRoute path="/nginx" element={<Index />}/>
+          <PrivateRoute path="/nginx/summary" element={<Summary />}/>
+          <PrivateRoute path="/nginx/ipwise" element={<IP />}/>
+          <PrivateRoute path="/nginx/firewall" element={<Firewall />}/>
+          <PrivateRoute path="/nginx/all-logs" element={<CompleteLogs />}/>
+          <PrivateRoute path="/nginx/detailed" element={<Detailed />}/> */}
 
 
 
@@ -60,6 +110,7 @@ function App() {
             
           {/* </Route> */}
         </Routes>
+        </AuthProvider>
       </BrowserRouter>
   );
 }

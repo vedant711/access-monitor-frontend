@@ -1,8 +1,9 @@
-import { useState,useEffect } from 'react'
+import { useState,useEffect,useContext } from 'react'
 import { API_URL } from "../constants";
 import axios from 'axios';
 import React, { Component } from "react";
 import {Routes, Route, useNavigate,Link,useLocation} from 'react-router-dom'
+import AuthContext from '../context/AuthContext';
 import './style.css'
 
 export default function Index() {
@@ -68,8 +69,9 @@ export default function Index() {
         navigate('/'+server+'/summary',{state:{filter:filter,server:server}})
 
     }
-
+    const { user, logoutUser } = useContext(AuthContext);
     return(
+
         <div style={{width:"100%"}} className="main-content">
             <div className="header">
             {/* <Link to={'/'+ server +'/ipwise'}>View IP wise hits</Link>
@@ -78,7 +80,7 @@ export default function Index() {
             <p onClick={()=>navigate('/'+ server +'/ipwise',{state:{server:server}})}>View IP wise hits</p>
             <p onClick={()=>navigate('/'+ server +'/firewall',{state:{server:server}})}>See all blocked IPs</p>
             <p onClick={()=>navigate('/'+ server +'/all-logs',{state:{server:server}})}>View Complete Log</p>
-
+            <p onClick={logoutUser}>Logout</p>
             </div>
         <div className='container'>
             <h1>Welcome to the Access Monitor for {server} Server</h1>
